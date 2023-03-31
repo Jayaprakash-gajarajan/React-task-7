@@ -2,20 +2,27 @@ import  './logo.svg';
 import './App.css';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { FormField } from 'semantic-ui-react';
-import { Button, Form, Table } from 'semantic-ui-react';
+import { Form, Table } from 'semantic-ui-react';
 // import { fontSize } from '@mui/system';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { Navigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { Button, TextField } from '@mui/material';
 import * as yup from 'yup';
+import { API } from './global';
+import Signin from './Signin';
 // import Card from '@mui/material/Card';
 import { useEffect, useState } from 'react';
 // import { Button, TextField } from '@mui/material';
 const API_URL = "https://638cafbcd2fc4a058a5d556b.mockapi.io/library";
 function App() {
   const navigate = useNavigate();
+  const dk = {
+    marginLeft: "auto"
+  }
   return (
     <div className="App">
       <Box sx={{ flexGrow: 1 }}>
@@ -25,6 +32,8 @@ function App() {
             <Button color="inherit" onClick={() => navigate("/create")} >Add Book</Button>
             <Button color="inherit" onClick={() => navigate("/read")}>Books</Button>
             <Button color="inherit" onClick={() => navigate("/update/:id")}>Edit Details</Button>
+            <Button color="inherit" onClick={() => navigate("/login")} style={dk}>Login</Button>
+            <Button color="inherit" onClick={() => navigate("/signup")}>Signin</Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -32,8 +41,14 @@ function App() {
       <h1 style={{ color: "blue" }}>Library Management</h1>
       <Routes>
         <Route path='/create' element={<Create />}></Route>
-        <Route path='/read' element={<Read />}></Route>
-        <Route path='/update/:id' element={<Edit />}></Route>
+        <Route path='/read' element={<Read /> }></Route>
+        <Route path='/update/:id' element={
+        <ProdectedRoute> 
+          <Edit />
+          </ProdectedRoute>
+       }></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/signup' element={<Signin/>}></Route>
       </Routes>
     </div>
   );
@@ -264,22 +279,84 @@ function Update({ details }) {
 
   )
 }
+function Login() {
+  const [formState,setFormState]=useState("success");
+  const navigate=useNavigate();
+  const {handleChange,values,handleSubmit}=useFormik({
+      initialValues:{username:"prakash",password:"123"},
+      onSubmit:async(values)=>{
+          console.log(values);
+       const data = await fetch(API+"/"+"login",{
+              method:"POST",
+              headers:{
+                  "Content-type":"application/json"
+              },
+              body:JSON.stringify(values),
+          });
+          if(data.status==401){
+              console.log("error");
+              setFormState("error")
+          }
+          else{
+              const result= await data.json()
+              console.log("success",result);
+              localStorage.setItem("token",result.token)
+              localStorage.setItem("roleId",result.roleId)
+              navigate("/read")
+          }
+        
+      },
+});
+return (
+  <div>
+     <form onSubmit={handleSubmit} className="login-form" >
+              <h2>Login</h2>
+          <TextField 
+          id="outlined-basic" 
+          label="Username"
+           variant="outlined"
+           onChange={handleChange} 
+           value={values.username}
+           name="username"
+           /> 
+
+         <TextField id="outlined-basic"
+          label="Password" 
+          variant="outlined" 
+          onChange={handleChange} 
+          value={values.password}
+          name="password"
+          />   
+
+          <Button  color={formState}
+          type="submit" variant="contained">
+              {formState ==="error"?"Retry":"Submit"}
+              </Button>
+          </form>
+          <div className='logout'>
+          <Button onClick={()=>logout()}>logout</Button>
+          </div>
+      </div>
+)
+}
+function logout() {
+  localStorage.removeItem("token")
+  window.location.href = "/";
+
+}
+function checkAuth(data) {
+  if (data.status === 401) {
+    console.log("Unauthorized")
+    throw Error("Unauthorized")
+  }
+  else {
+    return data.json();
+  }
+}
+ function ProdectedRoute({ children }) {
+  const isAuth = localStorage.getItem("token");
+  console.log(isAuth)
+  return isAuth ? children : <Navigate replace to={"/"} />
+}
 
 export default App;
-// const [bookName, setBookName] = useState("");
-  // const [bookNumber, setBookNumber] = useState("");
-  // const [author, setAuthor] = useState("");
-  // const [borrowMember, setBorrowMember] = useState("");
-  // const [isAvailable, setIsAvailable] = useState("");
-  // const [borrowDate, setBorrowDate] = useState("");
-  // const [id, setId] = useState("");
-
-  // useEffect(() => {
-  //   setId(localStorage.getItem("id"))
-  //   setBookName(localStorage.getItem("bookName"))
-  //   setBookNumber(localStorage.getItem("bookNumber"))
-  //   setBorrowMember(localStorage.getItem("borrowMember"))
-  //   setAuthor(localStorage.getItem("author"))
-  //   setIsAvailable(localStorage.getItem("borrowDate"))
-  //   setBorrowDate(localStorage.getItem("isAvailable"))
-  // }, [])
