@@ -122,32 +122,32 @@ function Create() {
     <h2 style={{margin:"15px"}}>ADD THE NEW BOOKS</h2>
     <Form onSubmit={handleSubmit}>
       <FormField >
-        <label>BookName</label>
+        <label className='labels'>BookName</label>
         <input placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookName && errors.bookName ? errors.bookName : null}
       <FormField>
-        <label>Book Number</label>
+        <label className='labels'>Book Number</label>
         <input placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookNumber && errors.bookNumber ? errors.bookNumber : null}
       <FormField>
-        <label>Author</label>
+        <label className='labels'>Author</label>
         <input placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.author && errors.author ? errors.author : null}
       <FormField>
-        <label>IsAvailable</label>
+        <label className='labels'>IsAvailable</label>
         <input placeholder='enter Yes or No' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.isAvailable && errors.isAvailable ? errors.isAvailable : null}
       <FormField>
-        <label>BorrowMember name</label>
+        <label className='labels'>BorrowMember name</label>
         <input placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowMember && errors.borrowMember ? errors.borrowMember : null}
       <FormField>
-        <label>Borrow Date</label>
+        <label className='labels'>Borrow Date</label>
         <input placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
@@ -210,9 +210,9 @@ function Read() {
                 <Table.Cell>{data.borrowMember}</Table.Cell>
                 <Table.Cell>{data.borrowDate}</Table.Cell>
                 <Table.Cell><Button onClick={() =>
-                  deleteUser(data.id)}>Delete</Button></Table.Cell>
+                  deleteUser(data.id)} style={{color:"white"}}>Delete</Button></Table.Cell>
                 <Table.Cell><Button onClick={() =>
-                  updateUser(data)}>Update</Button></Table.Cell>
+                  updateUser(data)} style={{color:"white"}}>Update</Button></Table.Cell>
 
               </Table.Row>
             ))
@@ -273,33 +273,33 @@ function Update({ details }) {
        <h2 style={{margin:"15px"}}>EDIT THE BOOK DETAILS</h2>
     <Form onSubmit={handleSubmit}>
       <FormField>
-        <label>BookName</label>
+        <label className='labels'>BookName</label>
         <input placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       
       {touched.bookName && errors.bookName ? errors.bookName : null}
       <FormField>
-        <label>Book Number</label>
+        <label className='labels'>Book Number</label>
         <input placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookNumber && errors.bookNumber ? errors.bookNumber : null}
       <FormField>
-        <label>Author</label>
+        <label className='labels'>Author</label>
         <input placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.author && errors.author ? errors.author : null}
       <FormField>
-        <label>IsAvailable</label>
+        <label className='labels'>IsAvailable</label>
         <input placeholder='enter the state' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.isAvailable && errors.isAvailable ? errors.isAvailable : null}
       <FormField>
-        <label>BorrowMember name</label>
+        <label className='labels'>BorrowMember name</label>
         <input placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowMember && errors.borrowMember ? errors.borrowMember : null}
       <FormField>
-        <label>Borrow Date</label>
+        <label className='labels'>Borrow Date</label>
         <input placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
@@ -325,7 +325,7 @@ function Login() {
   // const roleId=localStorage.getItem("roleId");
   const [formState,setFormState]=useState("success");
   const navigate=useNavigate();
-  const {handleChange,values,handleSubmit}=useFormik({
+  const {handleChange,values,handleBlur,handleSubmit}=useFormik({
       initialValues:{username:"",password:""},
       onSubmit:async(values)=>{
           console.log(values);
@@ -354,37 +354,41 @@ function Login() {
       },
 });
 return (
-  <div>
-     <form onSubmit={handleSubmit} className="login-form" >
-              <h2 style={{margin:"15px"}}>LOGIN</h2>
-          <TextField 
-          id="outlined-basic" 
-          label="Username"
-           variant="outlined"
+      <div className="center">
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="txt_field">
+          <input type="text" required=""
            onChange={handleChange} 
+           onBlur={handleBlur}
            value={values.username}
            name="username"
-           /> 
-
-         <TextField id="outlined-basic"
-         type={passwordType}
-          label="Password" 
-          variant="outlined" 
+          />
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div className="txt_field">
+          <input type="password" required=""
           onChange={handleChange} 
+          onBlur={handleBlur}
           value={values.password}
           name="password"
-          /> 
-          <span className="eye" onClick={handleToggle}>{passwordIcon}</span>  
-
-          <Button  color={formState}
-          type="submit" variant="contained">
-              {formState ==="error"?"Retry":"LOGIN"}
-              </Button>
-          </form>
-          <div className='logout'>
-          <Button onClick={()=>logout()}>LOGOUT</Button>
-          </div>
-      </div>
+          />
+          <span></span>
+          <label>Password</label>
+        </div>
+        <button 
+        color={formState}
+        type="submit" variant="contained">
+          {formState ==="error"?"Retry":"Login"}
+          </button>
+          <Button onClick={()=>logout()}>Logout</Button>
+        {/* <input type="submit" value="Login"/> */}
+        <div className="signup_link">
+          Not a member? <a href="/signup">Signup</a>
+        </div>
+      </form>
+    </div>
 )
 }
 function logout() {
