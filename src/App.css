@@ -5,6 +5,10 @@
 .labels{
   margin: 10px;
 }
+.input_value{
+  margin: 5px;
+  padding: 5px;
+}
 .App {
   text-align: center;
   height: 100vh;
@@ -23,11 +27,17 @@
  padding: 170px;
  font-size: 80px;
 }
+.signup__button{
+  margin:40px 0px;
+  margin-left: 1px;
+  margin-right: 20px;
+}
 .eye{
+  background: none !important;
   position: absolute;
-  right:18%;
-  top:39.9%;
-  left:60%;
+  right:20%;
+  top:0%;
+  left:80%;
   width: 15px;
 }
 .home__page{

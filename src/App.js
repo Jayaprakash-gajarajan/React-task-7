@@ -123,32 +123,32 @@ function Create() {
     <Form onSubmit={handleSubmit}>
       <FormField >
         <label className='labels'>BookName</label>
-        <input placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookName && errors.bookName ? errors.bookName : null}
       <FormField>
         <label className='labels'>Book Number</label>
-        <input placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookNumber && errors.bookNumber ? errors.bookNumber : null}
       <FormField>
         <label className='labels'>Author</label>
-        <input placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.author && errors.author ? errors.author : null}
       <FormField>
         <label className='labels'>IsAvailable</label>
-        <input placeholder='enter Yes or No' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter Yes or No' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.isAvailable && errors.isAvailable ? errors.isAvailable : null}
       <FormField>
         <label className='labels'>BorrowMember name</label>
-        <input placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowMember && errors.borrowMember ? errors.borrowMember : null}
       <FormField>
         <label className='labels'>Borrow Date</label>
-        <input placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
       <Button id="button" type="submit" > Submit</Button>
@@ -274,33 +274,33 @@ function Update({ details }) {
     <Form onSubmit={handleSubmit}>
       <FormField>
         <label className='labels'>BookName</label>
-        <input placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the bookname' name='bookName' value={values.bookName} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       
       {touched.bookName && errors.bookName ? errors.bookName : null}
       <FormField>
         <label className='labels'>Book Number</label>
-        <input placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the booknumber' name='bookNumber' value={values.bookNumber} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.bookNumber && errors.bookNumber ? errors.bookNumber : null}
       <FormField>
         <label className='labels'>Author</label>
-        <input placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the author ' name='author' value={values.author} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.author && errors.author ? errors.author : null}
       <FormField>
         <label className='labels'>IsAvailable</label>
-        <input placeholder='enter the state' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the state' name='isAvailable' value={values.isAvailable} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.isAvailable && errors.isAvailable ? errors.isAvailable : null}
       <FormField>
         <label className='labels'>BorrowMember name</label>
-        <input placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the name' name='borrowMember' value={values.borrowMember} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowMember && errors.borrowMember ? errors.borrowMember : null}
       <FormField>
         <label className='labels'>Borrow Date</label>
-        <input placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
+        <input className='input_value' placeholder='enter the date' name='borrowDate' value={values.borrowDate} onChange={handleChange} onBlur={handleBlur} /><br></br>
       </FormField>
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
       <Button id="button" type="submit" > Submit</Button>
@@ -368,7 +368,7 @@ return (
           <label>Username</label>
         </div>
         <div className="txt_field">
-          <input type="password" required=""
+          <input type={passwordType} required=""
           onChange={handleChange} 
           onBlur={handleBlur}
           value={values.password}
@@ -376,6 +376,7 @@ return (
           />
           <span></span>
           <label>Password</label>
+          <span className="eye" style={{background:"none"}} onClick={handleToggle}>{passwordIcon}</span>
         </div>
         <button 
         color={formState}

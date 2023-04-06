@@ -54,36 +54,36 @@ const movieValidationShema = yup.object({
         },
   });
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="login-form" >
-                <h2 style={{margin:"15px"}}>SIGNUP</h2>
-            <TextField 
-            id="outlined-basic" 
-            label="Username"
-             variant="outlined"
-             onChange={handleChange} 
-             onBlur={handleBlur}
-             value={values.username}
-             name="username"
-             /> 
-  {touched.username && errors.username ? errors.username : null}
-           <TextField id="outlined-basic"
-           type={passwordType}
-            label="Password" 
-            variant="outlined" 
-            onChange={handleChange} 
-            value={values.password}
-            onBlur={handleBlur}
-            name="password"
-            />   
-<span className="eye" onClick={handleToggle}>{passwordIcon}</span>  
-
-  {touched.password && errors.password ? errors.password : null}
-            <Button  color={formState}
-            type="submit" variant="contained">
-                {formState ==="error"?"RETRY":"SIGNUP"}
-                </Button>
-            </form>
+    <div className="center">
+      <h1>Create a Account</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="txt_field">
+          <input type="text" required=""
+           onChange={handleChange} 
+           onBlur={handleBlur}
+           value={values.username}
+           name="username"
+          />
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div className="txt_field">
+          <input type={passwordType} required=""
+          onChange={handleChange} 
+          onBlur={handleBlur}
+          value={values.password}
+          name="password"
+          />
+          <span></span>
+          <label>Password</label>
+          <span className="eye"  onClick={handleToggle}>{passwordIcon}</span>
+        </div>
+        <button className='signup__button'
+        color={formState}
+        type="submit" variant="contained">
+          {formState ==="error"?"Retry":"Signup"}
+          </button>
+      </form>
     </div>
   )
   }
