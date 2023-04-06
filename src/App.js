@@ -14,8 +14,11 @@ import { Button, TextField } from '@mui/material';
 import * as yup from 'yup';
 import { API } from './global';
 import Signin from './Signin';
-// import Card from '@mui/material/Card';
+import Card from '@mui/material/Card';
+import { CardContent } from '@mui/material';
 import { useEffect, useState } from 'react';
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
+import Navbar from './Navbar';
 // import { Button, TextField } from '@mui/material';
 const API_URL = "https://638cafbcd2fc4a058a5d556b.mockapi.io/library";
 function App() {
@@ -25,7 +28,7 @@ function App() {
   }
   return (
     <div className="App">
-      <Box sx={{ flexGrow: 1 }}>
+      {/* <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar variant="dense">
             <Button color="inherit" onClick={() => navigate("/")}>Home</Button>
@@ -36,12 +39,20 @@ function App() {
             <Button color="inherit" onClick={() => navigate("/signup")}>Signin</Button>
           </Toolbar>
         </AppBar>
-      </Box>
+      </Box> */}
+        <Navbar/>
 
-      <h1 style={{ color: "blue" }}>Library Management</h1>
+      {/* <h1>Library Management</h1> */}
       <Routes>
-        <Route path='/create' element={<Create />}></Route>
-        <Route path='/read' element={<Read /> }></Route>
+        <Route path='/' element={<Home/>}></Route>
+        <Route path='/create' element={
+        <ProdectedRoute>
+        <Create />
+        </ProdectedRoute>}></Route>
+        <Route path='/read' element={
+        <ProdectedRoute>
+        <Read /> 
+        </ProdectedRoute>}></Route>
         <Route path='/update/:id' element={
         <ProdectedRoute> 
           <Edit />
@@ -61,6 +72,17 @@ const movieValidationShema = yup.object({
   borrowMember: yup.string().required().min(1),
   borrowDate: yup.string().required().min(1),
 })
+
+function Home(){
+  return(
+    <div className='home__page'>
+
+      <h1 className='login_h1'>LOGIN</h1>
+      
+            {/* <img src="https://tse4.mm.bing.net/th?id=OIP.of1Mf7O9kpbS1r8lnxkQHAHaEo&pid=Api&P=0" className="img_home"></img>       */}
+    </div>
+  )
+}
 
 function Create() {
 
@@ -96,6 +118,8 @@ function Create() {
   // const [borrowDate, setBorrowDate] = useState("");
 
   return (
+    <div className='create_books'>
+    <h2 style={{margin:"15px"}}>ADD THE NEW BOOKS</h2>
     <Form onSubmit={handleSubmit}>
       <FormField >
         <label>BookName</label>
@@ -129,7 +153,7 @@ function Create() {
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
       <Button id="button" type="submit" > Submit</Button>
     </Form>
-
+    </div>
   )
 }
 function Read() {
@@ -158,6 +182,8 @@ function Read() {
     callGetAPI();
   }, []);
   return (
+    <>
+   <h2 style={{margin:"15px"}}>ALL BOOKS DETAILS</h2>
     <div className='read'>
       <Table singleLine>
         <Table.Header >
@@ -194,6 +220,7 @@ function Read() {
         </Table.Body>
       </Table>
     </div>
+    </>
   )
 }
  export function Edit() {
@@ -242,6 +269,8 @@ function Update({ details }) {
   };
   
   return (
+    <>
+       <h2 style={{margin:"15px"}}>EDIT THE BOOK DETAILS</h2>
     <Form onSubmit={handleSubmit}>
       <FormField>
         <label>BookName</label>
@@ -276,14 +305,28 @@ function Update({ details }) {
       {touched.borrowDate && errors.borrowDate ? errors.borrowDate : null}<br></br>
       <Button id="button" type="submit" > Submit</Button>
     </Form>
-
+    </>
   )
 }
 function Login() {
+  const handleToggle=()=>{
+    if(passwordType==="password"){
+      setPasswordType("text");
+      setPasswordIcon(<FaEye/>)
+    }
+    else{
+      setPasswordType("password");
+      setPasswordIcon(<FaEyeSlash/>)
+    }
+  }
+      const [passwordType,setPasswordType]=useState("password");
+      const [passwordIcon,setPasswordIcon]=useState(<FaEyeSlash/>);
+
+  // const roleId=localStorage.getItem("roleId");
   const [formState,setFormState]=useState("success");
   const navigate=useNavigate();
   const {handleChange,values,handleSubmit}=useFormik({
-      initialValues:{username:"prakash",password:"123"},
+      initialValues:{username:"",password:""},
       onSubmit:async(values)=>{
           console.log(values);
        const data = await fetch(API+"/"+"login",{
@@ -302,7 +345,10 @@ function Login() {
               console.log("success",result);
               localStorage.setItem("token",result.token)
               localStorage.setItem("roleId",result.roleId)
-              navigate("/read")
+              const roleId=localStorage.getItem("roleId");
+              {roleId==1?
+              navigate("/read"):navigate("/create")
+              }
           }
         
       },
@@ -310,7 +356,7 @@ function Login() {
 return (
   <div>
      <form onSubmit={handleSubmit} className="login-form" >
-              <h2>Login</h2>
+              <h2 style={{margin:"15px"}}>LOGIN</h2>
           <TextField 
           id="outlined-basic" 
           label="Username"
@@ -321,20 +367,22 @@ return (
            /> 
 
          <TextField id="outlined-basic"
+         type={passwordType}
           label="Password" 
           variant="outlined" 
           onChange={handleChange} 
           value={values.password}
           name="password"
-          />   
+          /> 
+          <span className="eye" onClick={handleToggle}>{passwordIcon}</span>  
 
           <Button  color={formState}
           type="submit" variant="contained">
-              {formState ==="error"?"Retry":"Submit"}
+              {formState ==="error"?"Retry":"LOGIN"}
               </Button>
           </form>
           <div className='logout'>
-          <Button onClick={()=>logout()}>logout</Button>
+          <Button onClick={()=>logout()}>LOGOUT</Button>
           </div>
       </div>
 )

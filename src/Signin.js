@@ -5,11 +5,25 @@ import { useFormik } from 'formik';
 import { API } from './global';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
 const movieValidationShema = yup.object({
     username: yup.string().required(),
     password:yup.string().required().min(8),
   })
   function Signin() {
+    const handleToggle=()=>{
+        if(passwordType==="password"){
+          setPasswordType("text");
+          setPasswordIcon(<FaEye/>)
+        }
+        else{
+          setPasswordType("password");
+          setPasswordIcon(<FaEyeSlash/>)
+        }
+      }
+          const [passwordType,setPasswordType]=useState("password");
+          const [passwordIcon,setPasswordIcon]=useState(<FaEyeSlash/>);
+
     const [formState,setFormState]=useState("success");
     const navigate=useNavigate();
     const {handleChange,values,handleSubmit,handleBlur, touched, errors}=useFormik({
@@ -42,7 +56,7 @@ const movieValidationShema = yup.object({
   return (
     <div>
       <form onSubmit={handleSubmit} className="login-form" >
-                <h2>Sign in</h2>
+                <h2 style={{margin:"15px"}}>SIGNUP</h2>
             <TextField 
             id="outlined-basic" 
             label="Username"
@@ -54,6 +68,7 @@ const movieValidationShema = yup.object({
              /> 
   {touched.username && errors.username ? errors.username : null}
            <TextField id="outlined-basic"
+           type={passwordType}
             label="Password" 
             variant="outlined" 
             onChange={handleChange} 
@@ -61,10 +76,12 @@ const movieValidationShema = yup.object({
             onBlur={handleBlur}
             name="password"
             />   
+<span className="eye" onClick={handleToggle}>{passwordIcon}</span>  
+
   {touched.password && errors.password ? errors.password : null}
             <Button  color={formState}
             type="submit" variant="contained">
-                {formState ==="error"?"Retry":"Sign in"}
+                {formState ==="error"?"RETRY":"SIGNUP"}
                 </Button>
             </form>
     </div>

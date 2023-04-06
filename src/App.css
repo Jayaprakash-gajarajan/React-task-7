@@ -1,19 +1,44 @@
+*{
+  margin: 0;
+  padding: 0; 
+}
 .App {
-  /* padding-top: 80px; */
   text-align: center;
-  color: white;
-  background-color: gray;
   height: 100vh;
 }
-
-
-
+/* .create_books{
+  background-image: url("https://tse4.mm.bing.net/th?id=OIP.of1Mf7O9kpbS1r8lnxkQHAHaEo&pid=Api&P=0");
+  height: 100vh;
+  opacity: .8;
+  
+} */
+.login_h1{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: white;
+ padding: 170px;
+ font-size: 80px;
+}
+.eye{
+  position: absolute;
+  right:18%;
+  top:39.9%;
+  left:60%;
+  width: 15px;
+}
+.home__page{
+ background-image: url("https://tse4.mm.bing.net/th?id=OIP.of1Mf7O9kpbS1r8lnxkQHAHaEo&pid=Api&P=0");
+  width: 1300px;
+  height: 100vh;
+}
 label {
   width: 190px;
   display: inline-block;
   font-size: 18px;
+  
 }
-.login-form,.logout{
+.login-form{
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -39,11 +64,12 @@ input {
   padding: 8px;
   width: 20%;
   border-radius: 50px;
-  background-color: blue !important;
+  background-color: rgb(37, 37, 104) !important;
   border-style: none;
 }
 
 label,
 input {
   margin: 10px;
+  
 }
