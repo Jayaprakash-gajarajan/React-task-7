@@ -309,6 +309,7 @@ function Update({ details }) {
   )
 }
 function Login() {
+  const roleId=localStorage.getItem("roleId")
   const handleToggle=()=>{
     if(passwordType==="password"){
       setPasswordType("text");
@@ -383,7 +384,7 @@ return (
         type="submit" variant="contained">
           {formState ==="error"?"Retry":"Login"}
           </button>
-          <Button onClick={()=>logout()}>Logout</Button>
+          {roleId?<Button onClick={()=>logout()}>Logout</Button>:null}
         {/* <input type="submit" value="Login"/> */}
         <div className="signup_link">
           Not a member? <a href="/signup">Signup</a>
@@ -394,6 +395,7 @@ return (
 }
 function logout() {
   localStorage.removeItem("token")
+  localStorage.removeItem("roleId")
   window.location.href = "/";
 
 }
