@@ -2,6 +2,7 @@ import React from 'react'
 import './Navbar.css'
 import { Link } from 'react-router-dom'
 function Navbar() {
+  const roleId=localStorage.getItem("roleId");
   return (
     <div>
        <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -24,12 +25,18 @@ function Navbar() {
         <li className="nav-item">
           <Link className="nav-link" to={'/update/:id'}>EDIT BOOKS</Link>
         </li>
-        <li className="nav-item">
+        {
+          roleId?<li><button className='logout__btn' onClick={()=>logout()}>LOGOUT</button></li>
+          :
+            <li className="nav-item">
           <Link className="nav-link" to={'/login'}>LOGIN</Link>
         </li>
+}
+{roleId?null:
         <li>
-       <Link className='nav-link'to={'/signup'}>SIGNUP</Link>
+      <Link className='nav-link'to={'/signup'}>SIGNUP</Link>
         </li>
+}
       </ul>
     </div>
   </div>
@@ -37,5 +44,10 @@ function Navbar() {
     </div>
   )
 }
+function logout() {
+  localStorage.removeItem("token")
+  localStorage.removeItem("roleId")
+  window.location.href = "/";
 
+}
 export default Navbar
